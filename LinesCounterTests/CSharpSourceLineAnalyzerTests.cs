@@ -130,13 +130,15 @@ namespace LinesCounterTests
         }
 
         [Test]
-        [Ignore]
         public void TestMultiLineCommentEndingInTheMiddleOfALine()
         {
             const string sourceLine1 = "/* This is a n-line comment (n > 1)";
             const string sourceLine2 = "the second line of this comment";
-            const string sourceLine3 = "the third line is the last one */";
+            const string sourceLine3 = "the third line is the last one */ x = 17;";
 
+            Assert.IsTrue(sla.IsSourceLine(sourceLine3));
+            Assert.IsFalse(sla.IsCommentLine(sourceLine3));
+            Assert.IsTrue(sla.IsEffectiveCodeLine(sourceLine3));
         }
     }
 }
