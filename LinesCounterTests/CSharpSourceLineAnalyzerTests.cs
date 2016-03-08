@@ -111,18 +111,32 @@ namespace LinesCounterTests
             const string sourceLine1 = "/* This is a n-line comment (n > 1)";
             const string sourceLine2 = "the second line of this comment";
             const string sourceLine3 = "the third line is the last one */";
+            const string sourceLine4 = "x = 42;";
 
             Assert.IsFalse(sla.IsSourceLine(sourceLine1));
             Assert.IsFalse(sla.IsSourceLine(sourceLine2));
             Assert.IsFalse(sla.IsSourceLine(sourceLine3));
+            Assert.IsTrue(sla.IsSourceLine(sourceLine4));
 
             Assert.IsTrue(sla.IsCommentLine(sourceLine1));
             Assert.IsTrue(sla.IsCommentLine(sourceLine2));
             Assert.IsTrue(sla.IsCommentLine(sourceLine3));
+            Assert.IsFalse(sla.IsCommentLine(sourceLine4));
 
             Assert.IsFalse(sla.IsEffectiveCodeLine(sourceLine1));
             Assert.IsFalse(sla.IsEffectiveCodeLine(sourceLine2));
             Assert.IsFalse(sla.IsEffectiveCodeLine(sourceLine3));
+            Assert.IsTrue(sla.IsEffectiveCodeLine(sourceLine4));
+        }
+
+        [Test]
+        [Ignore]
+        public void TestMultiLineCommentEndingInTheMiddleOfALine()
+        {
+            const string sourceLine1 = "/* This is a n-line comment (n > 1)";
+            const string sourceLine2 = "the second line of this comment";
+            const string sourceLine3 = "the third line is the last one */";
+
         }
     }
 }
