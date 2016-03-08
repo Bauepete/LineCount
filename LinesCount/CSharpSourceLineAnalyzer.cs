@@ -36,7 +36,7 @@ namespace LinesCount
             if (isInBlockComment)
             {
                 isInBlockComment = !BlockCommentEndsInLine(sourceLine);
-                isCommentLine = !BlockCommentEndsInLine(sourceLine) || BlockCommentEndsInLine(sourceLine) && sourceLine.EndsWith("*/");
+                isCommentLine = !BlockCommentEndsInLine(sourceLine) || sourceLine.EndsWith("*/");
             }
             else
             {
