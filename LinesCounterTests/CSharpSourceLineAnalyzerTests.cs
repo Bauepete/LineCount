@@ -99,7 +99,7 @@ namespace LinesCounterTests
         [Test]
         public void TestBlockCommentNotEndedInTheSameLine()
         {
-            const string sourceLine = "/* This is a n-line comment (n > 1)";
+            const string sourceLine = "/* This is an n-line comment (n > 1)";
             Assert.IsFalse(sla.IsSourceLine(sourceLine));
             Assert.IsTrue(sla.IsCommentLine(sourceLine));
             Assert.IsFalse(sla.IsEffectiveCodeLine(sourceLine));
@@ -108,7 +108,7 @@ namespace LinesCounterTests
         [Test]
         public void TestFurtherLinesOfMultilineBlockComment()
         {
-            const string sourceLine1 = "/* This is a n-line comment (n > 1)";
+            const string sourceLine1 = "/* This is an n-line comment (n > 1)";
             const string sourceLine2 = "the second line of this comment";
             const string sourceLine3 = "the third line is the last one */";
             const string sourceLine4 = "x = 42;";
@@ -132,13 +132,20 @@ namespace LinesCounterTests
         [Test]
         public void TestMultiLineCommentEndingInTheMiddleOfALine()
         {
-            const string sourceLine1 = "/* This is a n-line comment (n > 1)";
+            const string sourceLine1 = "/* This is an n-line comment (n > 1)";
             const string sourceLine2 = "the second line of this comment";
             const string sourceLine3 = "the third line is the last one */ x = 17;";
 
             Assert.IsTrue(sla.IsSourceLine(sourceLine3));
             Assert.IsFalse(sla.IsCommentLine(sourceLine3));
             Assert.IsTrue(sla.IsEffectiveCodeLine(sourceLine3));
+        }
+
+        [Test]
+        public void TestWhetherWhitspacesAtBeginningAndEndAreIgnored()
+        {
+            const string sourceLine1 = "          ";
+            Assert.IsFalse(sla.IsSourceLine(sourceLine1));
         }
     }
 }

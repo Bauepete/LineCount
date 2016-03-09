@@ -15,7 +15,7 @@ namespace LinesCount
         /// <param name="sourceLine">Source line.</param>
         public bool IsSourceLine(string sourceLine)
         {
-            return !IsEmptyLine(sourceLine) && !IsCommentLine(sourceLine);
+            return !IsEmptyLine(sourceLine.Trim()) && !IsCommentLine(sourceLine.Trim());
         }
 
         static bool IsEmptyLine(string sourceLine)
@@ -32,6 +32,7 @@ namespace LinesCount
         /// <param name="sourceLine">Source line.</param>
         public bool IsCommentLine(string sourceLine)
         {
+            sourceLine = sourceLine.Trim();
             bool isCommentLine;
             if (isInBlockComment)
             {
@@ -82,6 +83,7 @@ namespace LinesCount
         /// <param name="sourceLine">Source line.</param>
         public bool IsEffectiveCodeLine(string sourceLine)
         {
+            sourceLine = sourceLine.Trim();
             return IsSourceLine(sourceLine) &&
             sourceLine != "{" && sourceLine != "}";
         }
