@@ -42,4 +42,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LinesCount\LinesCount.csproj">
+      <Project>{85AD5C26-45BD-4BB8-B52F-938F8CACD11F}</Project>
+      <Name>LinesCount</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

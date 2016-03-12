@@ -1,4 +1,5 @@
-﻿using Mono.TextEditor;
+﻿using LinesCount;
+using Mono.TextEditor;
 using MonoDevelop.Core;
 using MonoDevelop.Ide.Gui;
 using MonoDevelop.Ide;
@@ -13,6 +14,8 @@ namespace LinesCountAddIn
         private TextEditorData textEditorData;
         private Document linesCountDocument;
 
+        int linesOfCode, sourceLines, effectiveLines, commentLines;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DateInserter.LinesCountWriter"/> class.
         /// </summary>
@@ -23,6 +26,8 @@ namespace LinesCountAddIn
             if (linesCountDocument == null)
                 linesCountDocument = IdeApp.Workbench.NewDocument(linesCountDocumentName, "text/plain", "");
             textEditorData = linesCountDocument.GetContent<ITextEditorDataProvider>().GetTextEditorData();
+
+            linesOfCode = sourceLines = effectiveLines = commentLines = 0;
         }
 
         /// <summary>
@@ -32,6 +37,7 @@ namespace LinesCountAddIn
         public void WriteInfoOfSelectedItem(object selectedItem)
         {
             textEditorData.Document.Text = "";
+            Write(String.Format("   {0, -80} {1, 15} {2, 15} {3, 15} {4, 15}", "File", "Lines of code", "Source lines", "Effective lines", "Comment lines"));
 
             Solution selectedSolution = selectedItem as Solution;
             if (selectedSolution != null)
@@ -44,7 +50,7 @@ namespace LinesCountAddIn
             ProjectFile selectedFile = selectedItem as ProjectFile;
             if (selectedFile != null)
                 ShowProjectFile(selectedFile);
-
+            Write(String.Format("   {0, -80} {1, 15} {2, 15} {3, 15} {4, 15}", " ", linesOfCode, sourceLines, effectiveLines, commentLines));
             linesCountDocument.Select();
         }
 
@@ -92,8 +98,15 @@ namespace LinesCountAddIn
         private void WriteFileInfo(FilePath filePath)
         {
             string[] lines = File.ReadAllLines(filePath.ToString());
+            SourceFile s = new SourceFile(filePath.ToString(), lines, new CSharpSourceLineAnalyzer());
             string fittingPath = filePath.ToString().Length > 80 ? filePath.ToString().Substring(0, 79) : filePath.ToString();
-            string info = String.Format("{0, -80} {1, 3}", fittingPath, lines.Length);
+
+            linesOfCode += s.LinesOfCode;
+            sourceLines += s.SourceLinesOfCode;
+            effectiveLines += s.EffectiveLinesOfCode;
+            commentLines += s.CommentLines;
+
+            string info = String.Format("{0, -80} {1, 15} {2, 15} {3, 15} {4, 15}", fittingPath, s.LinesOfCode, s.SourceLinesOfCode, s.EffectiveLinesOfCode, s.CommentLines);
             Write("   " + info);
         }
 
