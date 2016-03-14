@@ -4,7 +4,7 @@ using System;
 using LinesCount;
 using System.IO;
 
-namespace LinesCounterTests
+namespace LinesCountTests
 {
     public class SourceFileTests
     {

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 
-namespace LinesCounterTests
+namespace LinesCountTests
 {
     public class LinesCounterTests
     {

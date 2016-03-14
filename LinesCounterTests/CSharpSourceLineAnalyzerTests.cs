@@ -2,7 +2,7 @@
 using System;
 using LinesCount;
 
-namespace LinesCounterTests
+namespace LinesCountTests
 {
     [TestFixture()]
     public class CSharpSourceLineAnalyzerTests
