@@ -40,8 +40,8 @@ namespace LinesCountAddIn
             SourceFileExtractor sourceFileExtractor = new SourceFileExtractor(GetSelectedItem());
             LinesCounter linesCounter = new LinesCounter(new CSharpSourceLineAnalyzer());
             linesCounter.Count(sourceFileExtractor.SourceFiles);
-            LinesCountWriter w = new LinesCountWriter(LINES_COUNT_DOCUMENT_NAME);
-            w.WriteInTextDocument(linesCounter.Results);
+            LinesCountWriter reportWriter = new LinesCountWriter(LINES_COUNT_DOCUMENT_NAME);
+            reportWriter.WriteInTextDocument(linesCounter.Results);
 //            sfa.SourceFiles;
 //            if (selectedItem != null)
 //                w.WriteInfoOfSelectedItem(selectedItem);

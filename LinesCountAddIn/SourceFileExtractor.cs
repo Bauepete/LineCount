@@ -15,6 +15,10 @@ namespace LinesCountAddIn
         /// <value>The source files.</value>
         public List<SourceFile> SourceFiles { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinesCountAddIn.SourceFileExtractor"/> class.
+        /// </summary>
+        /// <param name="solutionItem">Solution item.</param>
         public SourceFileExtractor(object solutionItem)
         {
             if (solutionItem == null)
@@ -67,6 +71,11 @@ namespace LinesCountAddIn
             }
         }
 
+        /// <summary>
+        /// Determines if the specified projectFile is a C# file.
+        /// </summary>
+        /// <returns><c>true</c> if the specified projectFile is a C# file; otherwise, <c>false</c>.</returns>
+        /// <param name="projectFile">Project file.</param>
         public static bool IsCSharpFile(ProjectFile projectFile)
         {
             return projectFile.Subtype == Subtype.Code && projectFile.FilePath.ToString().Trim().EndsWith(".cs");
