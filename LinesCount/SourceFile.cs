@@ -4,19 +4,26 @@ namespace LinesCount
 {
     public class SourceFile
     {
+        public string FilePath { private set; get; }
+
         /// <summary>
         /// Gets the physical lines of code, i.e., all lines including empty lines and comments
         /// </summary>
         /// <value>The lines of code.</value>
-        public int LinesOfCode { private set; get; }
+        public int LinesOfCode { set; get; }
 
-        public int SourceLinesOfCode { private set; get; }
+        public int SourceLinesOfCode { set; get; }
 
         public int CommentLines { private set; get; }
 
         public int EffectiveLinesOfCode { private set; get; }
 
-        public SourceFile(string name, string[] lines, ISourceLineAnalyzer sla)
+        public SourceFile(string filePath, string[] lines)
+        {
+
+        }
+
+        public SourceFile(string filePath, string[] lines, ISourceLineAnalyzer sla)
         {
             LinesOfCode = lines.Length;
             foreach (string line in lines)
@@ -28,6 +35,11 @@ namespace LinesCount
                 if (sla.IsEffectiveCodeLine(line))
                     EffectiveLinesOfCode++;
             }
+        }
+
+        public void Analyze(ISourceLineAnalyzer sourceLineAnalyzer)
+        {
+
         }
 
     }

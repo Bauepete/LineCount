@@ -33,6 +33,7 @@
     <Compile Include="LinesCounterCommands.cs" />
     <Compile Include="CountLinesHandler.cs" />
     <Compile Include="LinesCountWriter.cs" />
+    <Compile Include="SourceFileExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />

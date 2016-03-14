@@ -35,6 +35,7 @@
     <Compile Include="CSharpSourceLineAnalyzer.cs" />
     <Compile Include="ISourceLineAnalyzer.cs" />
     <Compile Include="SourceFile.cs" />
+    <Compile Include="LinesCounter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,7 +1,9 @@
-﻿using MonoDevelop.Components.Commands;
+﻿using LinesCount;
+using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
 using MonoDevelop.Projects;
 using System;
+using System.Collections.Generic;
 
 namespace LinesCountAddIn
 {
@@ -24,7 +26,7 @@ namespace LinesCountAddIn
             else
             {
                 ProjectFile selectedFile = selectedItem as ProjectFile;
-                info.Enabled = selectedFile != null && LinesCountWriter.IsCSharpFile(selectedFile);
+                info.Enabled = selectedFile != null && SourceFileExtractor.IsCSharpFile(selectedFile);
             }
         }
 
@@ -35,10 +37,14 @@ namespace LinesCountAddIn
 
         protected override void Run()
         {
+            SourceFileExtractor sourceFileExtractor = new SourceFileExtractor(GetSelectedItem());
+            LinesCounter linesCounter = new LinesCounter(new CSharpSourceLineAnalyzer());
+            linesCounter.Count(sourceFileExtractor.SourceFiles);
             LinesCountWriter w = new LinesCountWriter(LINES_COUNT_DOCUMENT_NAME);
-            object selectedItem = GetSelectedItem();
-            if (selectedItem != null)
-                w.WriteInfoOfSelectedItem(selectedItem);
+            w.WriteInTextDocument(linesCounter.Results);
+//            sfa.SourceFiles;
+//            if (selectedItem != null)
+//                w.WriteInfoOfSelectedItem(selectedItem);
         }
     }
 }
