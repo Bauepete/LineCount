@@ -4,15 +4,17 @@ namespace LinesCount
 {
     public class SourceFile
     {
+        private string[] lines;
+
         public string FilePath { private set; get; }
 
         /// <summary>
         /// Gets the physical lines of code, i.e., all lines including empty lines and comments
         /// </summary>
         /// <value>The lines of code.</value>
-        public int LinesOfCode { set; get; }
+        public int LinesOfCode { private set; get; }
 
-        public int SourceLinesOfCode { set; get; }
+        public int SourceLinesOfCode { private set; get; }
 
         public int CommentLines { private set; get; }
 
@@ -20,27 +22,31 @@ namespace LinesCount
 
         public SourceFile(string filePath, string[] lines)
         {
+            this.FilePath = filePath;
+            this.lines = lines;
 
+            LinesOfCode = -1;
+            SourceLinesOfCode = -1;
+            EffectiveLinesOfCode = -1;
+            CommentLines = -1;
         }
-
-        [Obsolete ("Three parameter constructor will be dropped")]
-        public SourceFile(string filePath, string[] lines, ISourceLineAnalyzer sla)
+            
+        public void GetAnalyzed(ISourceLineAnalyzer sourceLineAnalyzer)
         {
-            LinesOfCode = lines.Length;
+            LinesOfCode = 0;
+            SourceLinesOfCode = 0;
+            CommentLines = 0;
+            EffectiveLinesOfCode = 0;
             foreach (string line in lines)
             {
-                if (sla.IsSourceLine(line))
+                LinesOfCode++;
+                if (sourceLineAnalyzer.IsSourceLine(line))
                     SourceLinesOfCode++;
-                if (sla.IsCommentLine(line))
+                if (sourceLineAnalyzer.IsCommentLine(line))
                     CommentLines++;
-                if (sla.IsEffectiveCodeLine(line))
+                if (sourceLineAnalyzer.IsEffectiveCodeLine(line))
                     EffectiveLinesOfCode++;
             }
-        }
-
-        public void Analyze(ISourceLineAnalyzer sourceLineAnalyzer)
-        {
-
         }
 
     }
