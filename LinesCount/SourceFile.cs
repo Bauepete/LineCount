@@ -23,6 +23,7 @@ namespace LinesCount
 
         }
 
+        [Obsolete ("Three parameter constructor will be dropped")]
         public SourceFile(string filePath, string[] lines, ISourceLineAnalyzer sla)
         {
             LinesOfCode = lines.Length;
