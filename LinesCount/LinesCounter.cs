@@ -35,18 +35,18 @@ namespace LinesCount
         {
             Result.OverallResult r = Results.Overall;
 
-            sourceFiles[0].GetAnalyzed(sourceLineAnalyzer);
-            r.TotalLines = sourceFiles[0].LinesOfCode;
-            r.SourceLines = sourceFiles[0].SourceLinesOfCode;
-            r.EffectiveLines = sourceFiles[0].EffectiveLinesOfCode;
-            r.CommentLines = sourceFiles[0].CommentLines;
+            foreach (SourceFile f in sourceFiles)
+            {
+                f.GetAnalyzed(sourceLineAnalyzer);
+                r.TotalLines += f.LinesOfCode;
+                r.SourceLines += f.SourceLinesOfCode;
+                r.EffectiveLines += f.EffectiveLinesOfCode;
+                r.CommentLines += f.CommentLines;
 
-            Results.Details.Add(sourceFiles[0]);
-
+                Results.Details.Add(f);
+            }
             Results.Overall = r;
         }
-
-
     }
 }
 

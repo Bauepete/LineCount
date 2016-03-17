@@ -47,11 +47,13 @@ namespace LinesCountTests
         }
 
         [Test]
-        [Ignore]
-        public void TestTwoFiles()
+        public void TestTwoFilesOveralls()
         {
             lc.Count(new List<SourceFile>(new SourceFile[]{ f1, f2 })); 
-
+            Assert.AreEqual(11, lc.Results.Overall.TotalLines);
+            Assert.AreEqual(9, lc.Results.Overall.SourceLines);
+            Assert.AreEqual(3, lc.Results.Overall.EffectiveLines);
+            Assert.AreEqual(2, lc.Results.Overall.CommentLines);
         }
     }
 }
