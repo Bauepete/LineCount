@@ -37,16 +37,28 @@ namespace LinesCount
 
             foreach (SourceFile f in sourceFiles)
             {
-                f.GetAnalyzed(sourceLineAnalyzer);
-                r.TotalLines += f.LinesOfCode;
-                r.SourceLines += f.SourceLinesOfCode;
-                r.EffectiveLines += f.EffectiveLinesOfCode;
-                r.CommentLines += f.CommentLines;
-
-                Results.Details.Add(f);
+                UpdateOverallResults(ref r, f);
+                AddSourceFileToDetails(f);
             }
+
             Results.Overall = r;
         }
+
+        Result.OverallResult UpdateOverallResults(ref Result.OverallResult r, SourceFile f)
+        {
+            f.GetAnalyzed(sourceLineAnalyzer);
+            r.TotalLines += f.LinesOfCode;
+            r.SourceLines += f.SourceLinesOfCode;
+            r.EffectiveLines += f.EffectiveLinesOfCode;
+            r.CommentLines += f.CommentLines;
+            return r;
+        }
+
+        void AddSourceFileToDetails(SourceFile f)
+        {
+            Results.Details.Add(f);
+        }
+
     }
 }
 

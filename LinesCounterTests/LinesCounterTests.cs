@@ -7,53 +7,63 @@ namespace LinesCountTests
 {
     public class LinesCounterTests
     {
-        private LinesCounter lc;
-        private SourceFile f1;
-        private SourceFile f2;
+        private LinesCounter linesCounter;
+        private SourceFile sourceFile0;
+        private SourceFile sourceFile1;
 
         [SetUp]
         public void SetUp()
         {
-            lc  = new LinesCounter(new CSharpSourceLineAnalyzer());
-            f1 = new SourceFile("f1.cs", new string[]{ "// f1.cs", "class F1", "{", "}" });
-            f2 = new SourceFile("f1.cs", new string[]{ "// f1.cs", "class F1", "{", "F1()", "{", "}", "}" });
+            linesCounter  = new LinesCounter(new CSharpSourceLineAnalyzer());
+            sourceFile0 = new SourceFile("f1.cs", new string[]{ "// f1.cs", "class F1", "{", "}" });
+            sourceFile1 = new SourceFile("f1.cs", new string[]{ "// f1.cs", "class F1", "{", "F1()", "{", "}", "}" });
         }
 
         [Test]
         public void TestConstruction()
         {
-            Assert.AreEqual(0, lc.Results.Overall.TotalLines);
-            Assert.AreEqual(0, lc.Results.Overall.SourceLines);
-            Assert.AreEqual(0, lc.Results.Overall.EffectiveLines);
-            Assert.AreEqual(0, lc.Results.Overall.CommentLines);
-            Assert.AreEqual(0, lc.Results.Details.Count);
+            Assert.AreEqual(0, linesCounter.Results.Overall.TotalLines);
+            Assert.AreEqual(0, linesCounter.Results.Overall.SourceLines);
+            Assert.AreEqual(0, linesCounter.Results.Overall.EffectiveLines);
+            Assert.AreEqual(0, linesCounter.Results.Overall.CommentLines);
+            Assert.AreEqual(0, linesCounter.Results.Details.Count);
         }
 
         [Test]
         public void TestFirstFileOveralls()
         {
-            lc.Count(new List<SourceFile>(new SourceFile[]{f1}));
-            Assert.AreEqual(4, lc.Results.Overall.TotalLines);
-            Assert.AreEqual(3, lc.Results.Overall.SourceLines);
-            Assert.AreEqual(1, lc.Results.Overall.EffectiveLines);
-            Assert.AreEqual(1, lc.Results.Overall.CommentLines);
+            linesCounter.Count(new List<SourceFile>(new SourceFile[]{sourceFile0}));
+            Assert.AreEqual(4, linesCounter.Results.Overall.TotalLines);
+            Assert.AreEqual(3, linesCounter.Results.Overall.SourceLines);
+            Assert.AreEqual(1, linesCounter.Results.Overall.EffectiveLines);
+            Assert.AreEqual(1, linesCounter.Results.Overall.CommentLines);
         }
 
         [Test]
         public void TestFirstFileDetails()
         {
-            lc.Count(new List<SourceFile>(new SourceFile[]{ f1 }));
-            Assert.AreEqual(f1, lc.Results.Details[0]);
+            linesCounter.Count(new List<SourceFile>(new SourceFile[]{ sourceFile0 }));
+            Assert.AreEqual(1, linesCounter.Results.Details.Count);
+            Assert.AreEqual(sourceFile0, linesCounter.Results.Details[0]);
         }
 
         [Test]
         public void TestTwoFilesOveralls()
         {
-            lc.Count(new List<SourceFile>(new SourceFile[]{ f1, f2 })); 
-            Assert.AreEqual(11, lc.Results.Overall.TotalLines);
-            Assert.AreEqual(9, lc.Results.Overall.SourceLines);
-            Assert.AreEqual(3, lc.Results.Overall.EffectiveLines);
-            Assert.AreEqual(2, lc.Results.Overall.CommentLines);
+            linesCounter.Count(new List<SourceFile>(new SourceFile[]{ sourceFile0, sourceFile1 })); 
+            Assert.AreEqual(11, linesCounter.Results.Overall.TotalLines);
+            Assert.AreEqual(9, linesCounter.Results.Overall.SourceLines);
+            Assert.AreEqual(3, linesCounter.Results.Overall.EffectiveLines);
+            Assert.AreEqual(2, linesCounter.Results.Overall.CommentLines);
+        }
+
+        [Test]
+        public void TestTwoFilesDetails()
+        {
+            linesCounter.Count(new List<SourceFile>(new SourceFile[]{ sourceFile0, sourceFile1 }));
+            Assert.AreEqual(2, linesCounter.Results.Details.Count);
+            Assert.AreEqual(sourceFile0, linesCounter.Results.Details[0]);
+            Assert.AreEqual(sourceFile1, linesCounter.Results.Details[1]);
         }
     }
 }
