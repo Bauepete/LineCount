@@ -15,8 +15,8 @@ namespace LinesCountTests
         public void SetUp()
         {
             linesCounter  = new LinesCounter(new CSharpSourceLineAnalyzer());
-            sourceFile0 = new SourceFile("f1.cs", new string[]{ "// f1.cs", "class F1", "{", "}" });
-            sourceFile1 = new SourceFile("f1.cs", new string[]{ "// f1.cs", "class F1", "{", "F1()", "{", "}", "}" });
+            sourceFile0 = new SourceFile("Hicks", "Pfui", "f1.cs", new string[]{ "// f1.cs", "class F1", "{", "}" });
+            sourceFile1 = new SourceFile("Hicks", "Pfui", "f1.cs", new string[]{ "// f1.cs", "class F1", "{", "F1()", "{", "}", "}" });
         }
 
         [Test]

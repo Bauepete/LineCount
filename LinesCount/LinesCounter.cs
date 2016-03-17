@@ -46,7 +46,7 @@ namespace LinesCount
 
         Result.OverallResult UpdateOverallResults(ref Result.OverallResult r, SourceFile f)
         {
-            f.GetAnalyzed(sourceLineAnalyzer);
+            f.GetAnalyzedBy(sourceLineAnalyzer);
             r.TotalLines += f.LinesOfCode;
             r.SourceLines += f.SourceLinesOfCode;
             r.EffectiveLines += f.EffectiveLinesOfCode;

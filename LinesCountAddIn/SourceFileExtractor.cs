@@ -9,6 +9,9 @@ namespace LinesCountAddIn
 {
     public class SourceFileExtractor
     {
+        private Solution currentSolution;
+        private Project currentProject;
+
         /// <summary>
         /// Gets the source files.
         /// </summary>
@@ -43,6 +46,7 @@ namespace LinesCountAddIn
 
         private void ExtractFromSolution(Solution solution)
         {
+            currentSolution = solution;
             foreach (SolutionItem si in solution.Items)
             {
                 Project project = si as Project;
@@ -55,6 +59,7 @@ namespace LinesCountAddIn
 
         private void ExtractFromProject(Project project)
         {
+            currentProject = project;
             foreach (ProjectItem projectItem in project.Items)
             {
                 ProjectFile projectFile = projectItem as ProjectFile;
@@ -67,7 +72,7 @@ namespace LinesCountAddIn
             if (projectFile != null && IsCSharpFile(projectFile))
             {
                 string[] lines = File.ReadAllLines(projectFile.FilePath);
-                SourceFiles.Add(new SourceFile(projectFile.FilePath.ToString(), lines));
+                SourceFiles.Add(new SourceFile(currentSolution.Name, currentProject.Name, projectFile.FilePath.ToString(), lines));
             }
         }
 

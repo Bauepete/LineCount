@@ -62,8 +62,8 @@ namespace LinesCountTests
 
         private void SetupSourceFiles()
         {
-            srcFile1 = new SourceFile("foo.cs", source1);
-            srcFile2 = new SourceFile("baa.cs", source2);
+            srcFile1 = new SourceFile("Hicks", "Pfui", "foo.cs", source1);
+            srcFile2 = new SourceFile("Hicks", "Pfui", "baa.cs", source2);
         }
 
         [Test]
@@ -85,56 +85,56 @@ namespace LinesCountTests
         [Test]
         public void TestLOC1()
         {
-            srcFile1.GetAnalyzed(sourceLineAnalyzerDouble.Object);
+            srcFile1.GetAnalyzedBy(sourceLineAnalyzerDouble.Object);
             Assert.AreEqual(9, srcFile1.LinesOfCode);
         }
 
         [Test]
         public void TestLOC2()
         {
-            srcFile2.GetAnalyzed(sourceLineAnalyzerDouble.Object);
+            srcFile2.GetAnalyzedBy(sourceLineAnalyzerDouble.Object);
             Assert.AreEqual(16, srcFile2.LinesOfCode);
         }
 
         [Test]
         public void TestSLOC1()
         {
-            srcFile1.GetAnalyzed(sourceLineAnalyzerDouble.Object);
+            srcFile1.GetAnalyzedBy(sourceLineAnalyzerDouble.Object);
             Assert.AreEqual(7, srcFile1.SourceLinesOfCode);
         }
 
         [Test]
         public void TestSLOC2()
         {
-            srcFile2.GetAnalyzed(sourceLineAnalyzerDouble.Object);
+            srcFile2.GetAnalyzedBy(sourceLineAnalyzerDouble.Object);
             Assert.AreEqual(11, srcFile2.SourceLinesOfCode);
         }
 
         [Test]
         public void TestCLOC1()
         {
-            srcFile1.GetAnalyzed(sourceLineAnalyzerDouble.Object);
+            srcFile1.GetAnalyzedBy(sourceLineAnalyzerDouble.Object);
             Assert.AreEqual(1, srcFile1.CommentLines);
         }
 
         [Test]
         public void TestCLOC2()
         {
-            srcFile2.GetAnalyzed(sourceLineAnalyzerDouble.Object);
+            srcFile2.GetAnalyzedBy(sourceLineAnalyzerDouble.Object);
             Assert.AreEqual(3, srcFile2.CommentLines);
         }
 
         [Test]
         public void TestELOC1()
         {
-            srcFile1.GetAnalyzed(sourceLineAnalyzerDouble.Object);
+            srcFile1.GetAnalyzedBy(sourceLineAnalyzerDouble.Object);
             Assert.AreEqual(3, srcFile1.EffectiveLinesOfCode);
         }
 
         [Test]
         public void TestELOC2()
         {
-            srcFile2.GetAnalyzed(sourceLineAnalyzerDouble.Object);
+            srcFile2.GetAnalyzedBy(sourceLineAnalyzerDouble.Object);
             Assert.AreEqual(5, srcFile2.EffectiveLinesOfCode);
         }
     }
