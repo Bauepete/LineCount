@@ -41,6 +41,8 @@ namespace LinesCount
             r.EffectiveLines = sourceFiles[0].EffectiveLinesOfCode;
             r.CommentLines = sourceFiles[0].CommentLines;
 
+            Results.Details.Add(sourceFiles[0]);
+
             Results.Overall = r;
         }
 
