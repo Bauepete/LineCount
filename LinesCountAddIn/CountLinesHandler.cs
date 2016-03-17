@@ -42,9 +42,6 @@ namespace LinesCountAddIn
             linesCounter.Count(sourceFileExtractor.SourceFiles);
             LinesCountWriter reportWriter = new LinesCountWriter(LINES_COUNT_DOCUMENT_NAME);
             reportWriter.WriteInTextDocument(linesCounter.Results);
-//            sfa.SourceFiles;
-//            if (selectedItem != null)
-//                w.WriteInfoOfSelectedItem(selectedItem);
         }
     }
 }
