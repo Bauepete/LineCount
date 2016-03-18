@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ExtensionModel>
+	<Runtime>
+		<Import assembly = "LinesCount.dll" />
+	</Runtime>
+
+
 	<Extension path="/MonoDevelop/Ide/Commands/Edit">
 		<Command id="LinesCountAddIn.LinesCounterCommands.CountLines" _label="Count Lines" _description = "Count lines" defaultHandler="LinesCountAddIn.CountLinesHandler" />
 	</Extension>
