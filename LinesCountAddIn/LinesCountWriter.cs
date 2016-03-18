@@ -14,6 +14,9 @@ namespace LinesCountAddIn
         private TextEditorData textEditorData;
         private Document linesCountDocument;
 
+        private string currentSolution;
+        private string currentProject;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DateInserter.LinesCountWriter"/> class.
         /// </summary>
@@ -57,15 +60,46 @@ namespace LinesCountAddIn
 
         private void WriteFileInfos(List<SourceFile> sourceFiles)
         {
+            WriteInitialSolutionAndProjectInfo(sourceFiles);
             foreach (SourceFile f in sourceFiles)
             {
+                WriteSolutionInfoPossibly(f.InSolution);
+                WriteProjectInfoPossibly(f.InProject);
                 WriteFileInfo(f);
+            }
+        }
+
+        void WriteInitialSolutionAndProjectInfo(List<SourceFile> sourceFiles)
+        {
+            currentSolution = sourceFiles[0].InSolution;
+            currentProject = sourceFiles[0].InProject;
+            if (currentSolution != "")
+                Write("In Solution " + currentSolution);
+            if (currentProject != "")
+                Write("In Project " + currentProject);
+        }
+
+        private void WriteSolutionInfoPossibly(string solutionOfFile)
+        {
+            if (solutionOfFile.CompareTo(currentSolution) != 0)
+            {
+                currentSolution = solutionOfFile;
+                Write("In Solution " + currentSolution);
+            }
+        }
+
+        private void WriteProjectInfoPossibly(string projectOfFile)
+        {
+            if (projectOfFile.CompareTo(currentProject) != 0)
+            {
+                currentProject = projectOfFile;
+                Write("In Project " + currentProject);
             }
         }
 
         private void WriteFoot(LinesCounter.Result.OverallResult overall)
         {
-            Write(String.Format("   {0, -80} {1, 15} {2, 15} {3, 15} {4, 15}", " ", overall.TotalLines, overall.SourceLines, overall.EffectiveLines, overall.CommentLines));
+            Write(String.Format("   {0, -80} {1, 15} {2, 15} {3, 15} {4, 15}", "Summary", overall.TotalLines, overall.SourceLines, overall.EffectiveLines, overall.CommentLines));
         }
 
         void BringDocumentToFront()

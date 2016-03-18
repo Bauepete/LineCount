@@ -72,7 +72,9 @@ namespace LinesCountAddIn
             if (projectFile != null && IsCSharpFile(projectFile))
             {
                 string[] lines = File.ReadAllLines(projectFile.FilePath);
-                SourceFiles.Add(new SourceFile(currentSolution.Name, currentProject.Name, projectFile.FilePath.ToString(), lines));
+                string solutionName = currentSolution == null ? "" : currentSolution.Name;
+                string projectName = currentProject == null ? "" : currentProject.Name;
+                SourceFiles.Add(new SourceFile(solutionName, projectName, projectFile.FilePath.ToString(), lines));
             }
         }
 

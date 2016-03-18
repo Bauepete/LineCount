@@ -57,6 +57,8 @@ namespace LinesCount
         /// <param name="lines">Lines.</param>
         public SourceFile(string inSolution, string inProject, string filePath, string[] lines)
         {
+            this.InSolution = inSolution;
+            this.InProject = inProject;
             this.FilePath = filePath;
             this.lines = lines;
 
